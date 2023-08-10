@@ -1,12 +1,21 @@
 const http = require("http");
 const fs = require("fs");
+const _ = require("lodash");
+
 // In node, we manually create a local server to listen for requests and respond to them
 // creating a server
 // store this in a 'server' const in case you wanna you use it for future like in web sockets
-
 const server = http.createServer((req, res) => {
-  console.log(req.url, req.method);
+  // lodash
+  const num = _.random(0, 20);
+  console.log(num);
 
+  const greet = _.once(() => {
+    console.log("hello");
+  });
+
+  greet();
+  greet();
   // set header content type
   res.setHeader("Content-Type", "text/html");
 
