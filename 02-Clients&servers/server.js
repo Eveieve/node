@@ -15,7 +15,8 @@ const server = http.createServer((req, res) => {
   });
 
   greet();
-  greet();
+  greet(); // called only once!
+
   // set header content type
   res.setHeader("Content-Type", "text/html");
 
