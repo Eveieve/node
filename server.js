@@ -15,8 +15,9 @@ const server = http.createServer((req, res) => {
     if (err) {
       console.log(err);
     } else {
-      res.write(data);
-      res.end();
+      //res.write(data);
+      // since we're using it once, we can pass the data directly to the end method
+      res.end(data);
     }
   });
 });
