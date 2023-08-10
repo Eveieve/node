@@ -11,16 +11,18 @@ const server = http.createServer((req, res) => {
   res.setHeader("Content-Type", "text/html");
 
   let path = "./views/"; // html files are inside html folder , always begine with ./views
-
   switch (req.url) {
     case "/":
       path += "index.html";
+      res.statusCode = 200; // if everything is okay
       break;
     case "/about":
       path += "about.html";
+      res.statusCode = 200; // if everything is okay
       break;
     default:
       path += "404.html";
+      res.statusCode = 404; // the resource doesn't exist
   }
 
   // send an html file
