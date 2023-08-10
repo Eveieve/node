@@ -14,6 +14,10 @@
 - 400 Range - user or client error codes
 - 500 Range - server error codes
 
-# NPM
+# 5. NPM
 
 - dependecies: all packages we install locally to this project
+
+# 6. Express Apps
+
+- Express is a framework that helps us manage routing, server-side logic, requests, responses in a much elegant way.
