@@ -20,6 +20,12 @@ const server = http.createServer((req, res) => {
       path += "about.html";
       res.statusCode = 200; // if everything is okay
       break;
+    case "/about-me": // this page has been removed!
+      // no need for 'path'
+      res.statusCode = 301; // the resource has been permanently removed
+      res.setHeader("Location", "/about"); // redirect to /about
+      res.end();
+      break;
     default:
       path += "404.html";
       res.statusCode = 404; // the resource doesn't exist
