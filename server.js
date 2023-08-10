@@ -1,5 +1,5 @@
 const http = require("http");
-
+const fs = require("fs");
 // In node, we manually create a local server to listen for requests and respond to them
 // creating a server
 // store this in a 'server' const in case you wanna you use it for future like in web sockets
@@ -10,11 +10,15 @@ const server = http.createServer((req, res) => {
   // set header content type
   res.setHeader("Content-Type", "text/html");
 
-  res.write('<head><link rel = "stylesheet" href = "#"></head>');
-  res.write("<p>hello, ninjas</p>");
-  res.write("<p>hello, again ninjas</p>");
-
-  res.end();
+  // send an html file
+  fs.readFile("./views/index.html", (err, data) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.write(data);
+      res.end();
+    }
+  });
 });
 
 // listening to the 3000 for the localhost for requests
