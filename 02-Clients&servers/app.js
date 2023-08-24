@@ -3,33 +3,41 @@ const express = require("express");
 // express app
 const app = express();
 
+// register view engine
+// app.set lets you configure some application settings
+// one of those settings is view engines
+// ejs is used to create our templates
+app.set("view engine", "ejs");
+//app.set('views', 'myviews'); // express will look in 'myviews' folder
+
 // set up listening for requests
 app.listen(3000); // returns an instance of a server
 
+app.use((req, res) => {
+  console.log('new request made:');
+  console.log('host: ', req.hostname);
+  console.log('path: ', req.path);
+  console.log('method: ', req.method);
+})
+
 // root of the domain
 app.get("/", (req, res) => {
-  //res.send("<p>home page</p>"); // instead of res.write..res.end..
-  res.sendFile("./views/index.html", { root: __dirname }); // the root should be 02-Clients&servers
+  res.render("index", { title: "Home" });
 });
 
 app.get("/about", (req, res) => {
-  // not an ideal way! we want to send a whole html file
-  //res.send("<p>about page</p>");
-  res.sendFile("./views/about.html", { root: __dirname }); // the root should be 02-Clients&servers
+  res.render("about");
 });
 
+app.get("/blogs/create", (req, res) => {
+  res.render();
+});
 // redirecting with express
 app.get("/about-us", (req, res) => {
-  res.redirect("/about"); // redirect to /about page!
+  res.redirect("/about", { title: "About" }); // redirect to /about page!
 });
 
-// 404 page
-// to create middleware and fire middleware functions
-// use this function for every single request regardless of the url
-// use() is gonna for every request coming in, but only if..
-// run the entire file, if no matches => carry on, get to the bottom => fire this callback
-
-// MUST GO AT THE BOTTOM!
+// This is a middleware
 app.use((req, res) => {
-  res.status(404).sendFile("./views/404.html", { root: __dirname });
+  res.status(404).render("404", { title: "404" });
 });

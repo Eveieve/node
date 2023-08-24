@@ -21,3 +21,27 @@
 # 6. Express Apps
 
 - Express is a framework that helps us manage routing, server-side logic, requests, responses in a much elegant way.
+
+# 7. View Engines
+
+(template engine)
+
+## EJS 
+
+# 8. Middleware 
+
+- Any code which runs (on the server) between getting a request and sending a response
+
+- app.use(func)
+- app.use('./', func) 
+
+- app.use(func)
+
+- The order of middleware is very important 
+
+## Middleware examples 
+
+- Logger middleware to log details of every request 
+- Authentication check middleware for protected routes 
+- Middleware to parse JSON data from requests 
+- Return 404 pages 
