@@ -25,13 +25,17 @@ http
     const path = req.url.replace(/\/?(?:\?.*)?$/, "").toLowerCase();
     switch (path) {
       case "":
-        res.writeHead(200, { "Content-type": "text.plain" });
-        res.end("Homepage");
+        serveStaticFiles(res, '/public/home.html', 'text/html');
         break;
+        // res.writeHead(200, { "Content-type": "text.plain" });
+        // res.end("Homepage");
+        // break;
       case "/about":
-        res.writeHead(200, { "Content-type": "text/plain" });
-        res.end("About");
+        serveStaticFiles(res, '/public/about.html', text/html);
         break;
+        // res.writeHead(200, { "Content-type": "text/plain" });
+        // res.end("About");
+        // break;
       default:
         res.writeHead(404, { "Content-type": "text/plain" });
         res.end("Not found");
