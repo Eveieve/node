@@ -1,3 +1,4 @@
+const fortune = require("./lib/fortune");
 const express = require("express");
 
 const app = express();
@@ -5,14 +6,6 @@ const app = express();
 // add static middleware
 app.use(express.static(__dirname + "/public"));
 
-// array of fortune cookies 
-const fortunes = [
-  "Conquer your fears or they will conquer you.",
-  "Rivers need springs.",
-  "Do not fear what you don't know.",
-  "You will have a pleasant surprise.",
-  "Whenever possible, keep it simple.",
-];
 // set up handlebars view engine
 // Creates a view engine and configures Express to use it by default
 const handlebars = require("express-handlebars").create({
@@ -29,8 +22,8 @@ app.get("/", (req, res) => {
 });
 
 app.get("/about", (req, res) => {
-    const randomFortune = fortunes[Math.floor(Math.random() * fortunes.length)];
-  res.render("about", {fortune: randomFortune});
+  const randomFortune = fortunes[Math.floor(Math.random() * fortunes.length)];
+  res.render("about", { fortune: randomFortune });
 });
 
 // 404 catch-all handler(middleware)
