@@ -45,6 +45,16 @@ app.use(handlers.notFound);
 // });
 app.use(handlers.serverError);
 
+app.get("/headers", (req, res) => {
+  res.type("text/plain");
+
+  const headers = Object.entries(req.headers).map(
+    ([key, value]) => `${key}: ${value}`
+  );
+
+  res.send(headers.join("\n"));
+});
+
 app.listen(app.get("port"), () => {
   console.log(
     "Express started on http://localhost:" +
