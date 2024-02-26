@@ -162,3 +162,107 @@ app.get("/headers", (req, res) => {
 `Internet media type` or `MIME type`. 
 
 ## Request Body 
+
+## The Request Object
+
+`req.route` Information about the currently matched route. 
+
+`req.cookies/req.signedCookies` Objects containing cookie values passed from the client. 
+
+`req.headers` The request headers received from the client. This is an object whose keys 
+
+## Getting more information 
+
+`lib/application.js` The main Express interface. If you want to understand how middleware is linked in or how views are rendered, this is the place to look. 
+
+`lib/express.js` A relatively short file that primarily provides the `createApplication` function (the default export of this file), which creates an Express application instance. 
+
+`lib/request.js` Extends Node's `http.IncomingMessage` object to provide a robust request object. For information about all the request object properties and methods, this is where to look. 
+
+`lib/response.js` Extends Node's `http.ServerResponse` object to provide the response object. For information about response object properties and methods, this is where to look. 
+
+`lib/router/route.js` Provides basic routing support. 
+
+## Boiling it down 
+
+### Rendering content 
+
+When you're rendering content, you'll be using `res.render` most often, which renders views within layouts, providing maximum value. Occasionally, you may want to write a quick test page, so you might use `res.send` if you just want a test page. You may use `req.query` to get querystring values, `req.session` to get session values, or `req.cookies/req.signedCookies` to get cookies. 
+
+Example 6-1. Basic usage
+```js
+//basic usage 
+app.get('/about', (req,res) => {
+  res.render('about')
+})
+```
+
+Example 6-2. Response codes other than 200 
+```js
+app.get('/error', (req,res) => {
+  res.status(500)
+  res.render('error')
+})
+// or on one line.. 
+
+app.get('/error', (req,res) => {
+  res.status(500).render('error'))
+})
+```
+
+Example 6-3. Passing a context to a view, including querystring, cookie, and session values 
+
+```js
+app.get('/greeting', (req,res) => {
+  res.render('greeting', {
+    message: 'Hello esteemed programmer!', 
+    style: req.query.style, 
+    userid: req.cookies.userid, 
+    username: req.session.username
+  })
+})
+```
+
+Example 6-4. Rendering a view without a layout 
+
+```js
+// the following layout doesn't have a layout file, so 
+// views/no-layout.handlers must include all necessary HTML 
+
+app.get('/no-layout', (req,res) => {
+  res.render('no-layout', {layout: null})
+})
+```
+
+Example 6-5. Rendering a view with a custom layout 
+
+```js
+// the layout file views/layouts/custom.handlebars will be used 
+app.get('/custom-layout', (req.res) => {
+  res.render('custom-layout', {layout: 'custom'})
+})
+```
+
+Example 6-6. Rendering plain text ouput 
+
+```js
+app.get('/text', (req,res) => {
+  res.type('text/plain')
+  res.send('this is a test')
+})
+```
+Example 6-7. Adding an error handler
+
+```js
+// this should appear AFTER all of your routes 
+// note that even if you don't need the 'next' function, 
+// it must be included for Express to recognize this as an error handler 
+
+app.use((err, req, res, next) => {
+  console.error("** SERVER ERROR: " + err.message)
+
+  res.status(500).render('09-error', {
+    message: "you shouldn't have clicked that!"})
+  })
+})
+```
